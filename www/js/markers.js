@@ -328,7 +328,7 @@ osm.markers.readMap = function() {
               textpoint+=point._pm_description;
             if (textpoint) {
               found = true;
-              textpoints+="<li>"+textpoint+"</li>";
+              textpoints+="<li><img src='"+point._pm_icon_object.iconUrl+"' alt='.'>"+textpoint+"</li>";
             }
           }
         $("#pmapview_points").html(textpoints);
@@ -375,7 +375,7 @@ PersonalMarker = L.Marker.extend({ // simple marker without editable functions
     if (isNaN(parseFloat(colorIndex)) || !isFinite(colorIndex) ||
       colorIndex < 0 || colorIndex >= osm.markers._icons.length )
       colorIndex = 0;
-    this.setIcon(osm.markers._icons[colorIndex]);
+    this.setIcon(this._pm_icon_object = osm.markers._icons[colorIndex]);
     this._pm_icon_color = colorIndex;
   }
 });
