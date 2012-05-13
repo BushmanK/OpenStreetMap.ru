@@ -54,6 +54,19 @@ $page_content = <<<PHP_CONTENT
           <p>Для поиска введите в строку искомый адрес и нажмите "Найти"</p>
         </div>
       </div>
+      <div id="leftpersmappan_view">
+        <div class="header">
+          <h1>Персональная карта</h1>
+        </div>
+        <div class="contentpan">
+          <h3 id="pmapview_name"></h3>
+          <span id="pmapview_description"></span><br>
+          Линии:<br>
+          <ul id="pmapview_lines"></ul>
+          Точки:<br>
+          <ul id="pmapview_points"></ul>
+        </div>
+      </div>
       <div id="leftpersmappan">
         <div class="header">
           <h1>Персональная карта</h1>
@@ -65,8 +78,12 @@ $page_content = <<<PHP_CONTENT
               <ul class="pm-options">
                 <li id="multimarkerbutton" onClick="osm.markers.addMultiMarker()"><img src='img/marker.svg' /><span>Маркер</span></li>
                 <li id="pathbutton" onClick='osm.markers.addPath();'><img src='img/path.svg' /><span>Путь</span></li>
+                <br>
+                <label>Название персональной карты:<input type="text" id="pmap_name"></label><br/>
+                <label>Описание:<textarea cols=30 rows=6 id="pmap_description"></textarea></label>
               </ul>
             </li>
+            <br>
             <li class="pm-submenu" id="pm_save" onClick="osm.markers.saveMap()"><img src='img/save.svg' /><span>Сохранить</span></li>
           </ul>
           <div id="pm_status"></div>
@@ -112,8 +129,8 @@ $page_content = <<<PHP_CONTENT
   <iframe name="hiddenIframe" id="hiddenIframe" style="display: none;"></iframe>
   <div id="pm_edit_popup" style="display: none;">
     <table cellspacing="0" cellpadding="0" border="0" id="marker_popup_###">
-      <tr><td><input id="marker_name_###" type="text" value="Name..." class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()"/></td></tr>
-      <tr><td><textarea id="marker_description_###" class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()">Description...</textarea></td></tr>
+      <tr><td><input id="marker_name_###" type="text" value="Имя..." class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()"/></td></tr>
+      <tr><td><textarea id="marker_description_###" class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()">Описание...</textarea></td></tr>
       <tr><td>
         <div class='colour-picker-button colour-picker-button-blue' onClick="$$$.toggleCheck(0);">&#x2713;</div>
         <div class='colour-picker-button colour-picker-button-red' onClick="$$$.toggleCheck(1);"></div>
@@ -140,8 +157,8 @@ $page_content = <<<PHP_CONTENT
   </div>
   <div id="pl_edit_popup" style="display:none;">
     <table cellspacing="0" cellpadding="0" border="0" id="line_popup_###">
-      <tr><td><input id="line_name_###" type="text" value="Name..." class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()"/></td></tr>
-      <tr><td><textarea id="line_description_###" class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()">Description...</textarea></td></tr>
+      <tr><td><input id="line_name_###" type="text" value="Имя..." class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()"/></td></tr>
+      <tr><td><textarea id="line_description_###" class="default-input" onFocus="osm.markers.focusDefaultInput(this)" onBlur="osm.markers.blurDefaultInput(this)" onkeyup="$$$.saveData()">Описание...</textarea></td></tr>
       <tr><td>
         <div class='colour-picker-button colour-picker-button-blue' onClick="$$$.toggleCheck(0);">&#x2713;</div>
         <div class='colour-picker-button colour-picker-button-red' onClick="$$$.toggleCheck(1);"></div>

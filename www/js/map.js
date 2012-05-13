@@ -430,25 +430,34 @@ osm.leftpan.toggle = function(on) {
   if (typeof on == "undefined") on = !this.on;
   var center = osm.map.getCenter();
   if (on != this.on) {
-    if (on === 2) {
-      this.on = 2;
+    if (on) {
+      if (on === true) 
+        on = 1;
+      this.on = on;
+      var newClass;
+      var activateClass;
+      switch(on) {
+      case 1:
+        newClass = 'leftSearch';
+        activateClass = 'search';
+        break;
+      case 2:
+        newClass = 'leftPersmap';
+        activateClass = 'persmap';
+        break;
+      case 3:
+        newClass = 'leftErrors';
+        activateClass = 'errors'; 
+        break;
+      case 4:
+        newClass = 'leftPersmapView';
+        break;
+      }
       $_('downpan').className = '';
-      $_('leftpan').className = 'leftPersmap';
+      $_('leftpan').className = newClass;
       $('#mainmenu .current li').removeClass('active');
-      $('#mainmenu .current li.persmap').addClass('active');
-    } else if (on === 3) {
-      this.on = 3;
-      $_('downpan').className = '';
-      $_('leftpan').className = 'leftErrors';
-      $('#mainmenu .current li').removeClass('active');
-      $('#mainmenu .current li.errors').addClass('active');
-    } else if (on) {
-      this.on = 1;
-      $_('downpan').className = '';
-      $_('leftpan').className = 'leftSearch';
-      $('#mainmenu .current li').removeClass('active');
-      $('#mainmenu .current li.search').addClass('active');
-      osm.map.addLayer(osm.layers.search_marker);
+      if (activateClass)
+        $('#mainmenu .current li.'+activateClass).addClass('active');
     } else {
       this.on = false;
       $_('downpan').className = 'left-on';

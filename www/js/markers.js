@@ -174,8 +174,8 @@ osm.markers.blurDefaultInput = function(el) {
 osm.markers.saveMap = function() {
   osm.markers._removeHandlers();
   var postData = {};
-  var mapName = "";
-  var mapDescription = "";
+  var mapName = $_("pmap_name").value;
+  var mapDescription = $_("pmap_description").value;
   postData.points = [];
   postData.lines = [];
   var mlen = osm.markers._data.points.length;
@@ -266,7 +266,9 @@ osm.markers.readMap = function() {
       osm.markers._admin.id = mapid;
       if (osm.markers._admin.editable)
         osm.leftpan.toggle(2);
-      //process map name and description
+      
+      $_("pmap_name").value = json.info.name;
+      $_("pmap_description").value = json.info.description;
       var latlngs = new Array();
       var p;
       if (json.data.points)
@@ -305,7 +307,36 @@ osm.markers.readMap = function() {
             p.loadEditableMarker();
         }
       }
-    } // TODO: add failure handler
+      
+      // add info to view panel - if there is any data
+      if (!osm.markers._admin.editable) {
+        var found = false;
+        if ($_("pmap_name").value)
+          found = true;
+        if ($_("pmap_description").value)
+          found = true;
+        $("#pmapview_name").text($_("pmap_name").value);
+        $("#pmapview_description").text($_("pmap_description").value);
+        var textpoints = "";
+        for (var i=0;i<osm.markers._data.points.length;i++)
+          if (osm.markers._data.points[i]) {
+            var point = osm.markers._data.points[i];
+            var textpoint = "";
+            if (point._pm_name)
+              textpoint+="<b>"+point._pm_name+"</b><br>";
+            if (point._pm_description)
+              textpoint+=point._pm_description;
+            if (textpoint) {
+              found = true;
+              textpoints+="<li>"+textpoint+"</li>";
+            }
+          }
+        $("#pmapview_points").html(textpoints);
+        
+        if (found)
+          osm.leftpan.toggle(4);
+      }
+    }
   }).fail(function (jqXHR, textStatus) {
     alert("Произошла ошибка при чтении карты");
   });
@@ -331,6 +362,9 @@ PersonalMarker = L.Marker.extend({ // simple marker without editable functions
     this._set_pm_icon_color(details.color);
   },
   addToLayerGroup: function() {
+    osm.markers._data.points.push(this);
+    this.index = osm.markers._data.points.length - 1;
+
     if (!osm.markers._layerGroup) {
       osm.markers._layerGroup = new L.LayerGroup();
       osm.map.addLayer(osm.markers._layerGroup);
@@ -354,8 +388,6 @@ PersonalMarkerEditable = PersonalMarker.extend({
     // fix html entities for editable markers
     this._pm_name = osm.markers.decodehtml(this._pm_name);
     this._pm_description = osm.markers.decodehtml(this._pm_description);
-    osm.markers._data.points.push(this);
-    this.index = osm.markers._data.points.length - 1;
     this.addToLayerGroup();
     var popupHTML = $_('pm_edit_popup').innerHTML;
     popupHTML = popupHTML.replace(/\$\$\$/g, 'osm.markers._data.points['+this.index+']');
@@ -425,6 +457,9 @@ PersonalLine = L.Polyline.extend({
     this.setStyle(properties);
   },
   addToLayerGroup: function() {
+    osm.markers._data.lines.push(this);
+    this.index = osm.markers._data.lines.length - 1;
+
     if (!osm.markers._layerGroup) {
       osm.markers._layerGroup = new L.LayerGroup();
       osm.map.addLayer(osm.markers._layerGroup);
@@ -456,8 +491,6 @@ PersonalLineEditable = PersonalLine.extend({
       this.remove();
       return;
     }
-    osm.markers._data.lines.push(this);
-    this.index = osm.markers._data.lines.length - 1;
     var popupHTML = $_('pl_edit_popup').innerHTML;
     popupHTML = popupHTML.replace(/\$\$\$/g, 'osm.markers._data.lines['+this.index+']');
     popupHTML = popupHTML.replace(/\#\#\#/g, this.index);

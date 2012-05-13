@@ -80,10 +80,20 @@ table {
 
 #leftpan.leftSearch div#leftpersmappan,
 #leftpan.leftSearch div#lefterrorspan,
+#leftpan.leftSearch div#leftpersmappan_view,
+
 #leftpan.leftErrors div#leftpersmappan,
 #leftpan.leftErrors div#leftsearchpan,
+#leftpan.leftErrors div#leftpersmappan_view,
+
 #leftpan.leftPersmap div#leftsearchpan,
-#leftpan.leftPersmap div#lefterrorspan {
+#leftpan.leftPersmap div#lefterrorspan,
+#leftpan.leftPersmap div#leftpersmappan_view,
+
+#leftpan.leftPersmapView div#leftpersmappan,
+#leftpan.leftPersmapView div#leftsearchpan,
+#leftpan.leftPersmapView div#lefterrorspan
+{
   display: none;
 }
 
