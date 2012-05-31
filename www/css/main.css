@@ -889,6 +889,14 @@ ul.pm-options span {
   background-color: #ff9;
 }
 
+#pm_items {
+  margin-top: 10px;
+}
+
+#pm_items_points, #pm_items_lines {
+  
+}
+
 .leaflet-container a.button, a.button  {
 	border: 1px solid transparent;
 	background: white;

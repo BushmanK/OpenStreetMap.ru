@@ -50,6 +50,14 @@ PersonalMarkerEditable = PersonalMarker.extend({
     popupHTML = popupHTML.replace(/\#\#\#/g, this.index);
     this.bindPopup(popupHTML);
     this.on('click', function(e){e.target.loadEditableMarker(e)});
+
+    // legend handling
+    $_('pm_items_points').innerHTML += "<tr id='legend_point_"+this.index+"'>"+this.constructLegend()+"</tr>";
+  },
+  constructLegend: function() {
+    var icon = this._icon.src;
+
+    return "<td><img src='"+icon+"' alt='.'/></td><td>"+osm.markers.encodehtml(this._pm_name)+"</td>";
   },
   saveData: function() {
     var nameEl = $_('marker_name_'+this.index);

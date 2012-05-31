@@ -51,7 +51,10 @@ osm.markers.initialize = function() {
   $(".colour-picker").each(function(){$(this).html(buttons)});
 }
 osm.markers.decodehtml = function(s) {
-  if(s) return $("<div/>").html(s).text(); else return s;
+  if(s) return $("<div/>").html(s).text(); else return '';
+}
+osm.markers.encodehtml = function(s) {
+  if(s) return $("<div/>").text(s).html(); else return '';
 }
 // TODO: when IE whould support placeholder attribute for input elements - remove that
 osm.markers.focusDefaultInput = function(el) {

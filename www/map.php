@@ -85,15 +85,20 @@ $page_content = <<<PHP_CONTENT
               <ul class="pm-options">
                 <li id="multimarkerbutton" onClick="osm.markers.addMultiMarker()"><img src='img/marker.svg' /><span>Маркер</span></li>
                 <li id="pathbutton" onClick='osm.markers.addPath();'><img src='img/path.svg' /><span>Путь</span></li>
-                <br>
-                <label>Название персональной карты:<input type="text" id="pmap_name"></label><br/>
-                <label>Описание:<textarea cols=30 rows=6 id="pmap_description"></textarea></label>
               </ul>
             </li>
             <br>
             <li class="pm-submenu" id="pm_save" onClick="osm.markers.saveMap()"><img src='img/save.svg' /><span>Сохранить</span></li>
           </ul>
           <div id="pm_status"></div>
+          <div id="pm_items_container">
+            <label>Название персональной карты:<input type="text" id="pmap_name"></label><br/>
+            <label>Описание:<textarea cols=30 rows=6 id="pmap_description"></textarea></label>
+            <table id="pm_items_lines" cellspacing="0" cellpadding="0">
+            </table>
+            <table id="pm_items_points" cellspacing="0" cellpadding="0">
+            </table>
+          </div>
         </div>
       </div>
       <div id="lefterrorspan">
