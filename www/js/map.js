@@ -140,6 +140,7 @@ function init() {
   osm.map.permalink = new L.Control.Permalink(osm.map.control_layers);
   osm.map.addControl(osm.map.permalink);
   osm.map.addControl(new L.Control.Zoom({shiftClick: true}));
+  osm.map.addControl(new L.Control.Distance());
   osm.markers.initialize();
   osm.markers.readMap();
   osm.validators.initialize();
@@ -164,9 +165,9 @@ function init() {
   $('#mainmenu .current li.search').click(osm.mode.search);
   $('#mainmenu .current li.persmap').click(osm.mode.persmap);
   $('#mainmenu .current li.errors').click(osm.mode.errors);
-  
+
   if (get.hidetoppan) osm.ui.togglefs();
-  
+
 };
 
 osm.mode = {
@@ -327,6 +328,22 @@ osm.initLayers = function(){
     wpc.layers,
     'Фото (ВикиСклад) beta',
     'W',
+    false
+  );
+
+  osm.registerLayer(
+    'layerWeatherCities',
+     new OsmJs.Weather.LeafletLayer({type: 'city', lang: 'ru', temperatureDigits: 0}),
+    'Погода (OpenWeatherMap) - города',
+    'w',
+    false
+  );
+
+  osm.registerLayer(
+    'layerWeatherStations',
+     new OsmJs.Weather.LeafletLayer({type: 'station', lang: 'ru'}),
+    'Погода (OpenWeatherMap) - станции',
+    's',
     false
   );
 
