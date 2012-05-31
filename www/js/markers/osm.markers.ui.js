@@ -64,7 +64,7 @@ osm.markers.createPoints = function(e) {
       count++;
   }
   if (count >= osm.markers._max_markers) {
-    alert("Маркеров не может быть больше " + osm.markers._max_markers);
+    alert("РњР°СЂРєРµСЂРѕРІ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ " + osm.markers._max_markers);
     return;
   }
 
@@ -92,7 +92,7 @@ osm.markers.createPath = function(e) { // todo: move it to PersonalLine?
   if (osm.markers._newPath)
   count+=osm.markers._newPath.getLatLngs().length-1;
   if (count >= osm.markers._max_line_points) {
-    alert("Суммарно точек в линиях не может быть больше "+
+    alert("РЎСѓРјРјР°СЂРЅРѕ С‚РѕС‡РµРє РІ Р»РёРЅРёСЏС… РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ "+
       osm.markers._max_line_points);
     return;
   }

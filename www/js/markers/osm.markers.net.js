@@ -36,9 +36,9 @@ osm.markers.saveMap = function() {
     postData.lines.push(lineData);
   }
   if (postData.points.length == 0 && postData.lines.length == 0) {
-    $_("pm_status").innerHTML = "Нет данных для сохранения!"
+    $_("pm_status").innerHTML = "РќРµС‚ РґР°РЅРЅС‹С… РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ!"
   } else {
-    $_("pm_status").innerHTML = "Сохранение...";
+    $_("pm_status").innerHTML = "РЎРѕС…СЂР°РЅРµРЅРёРµ...";
     $.ajax({
       url: "mymap.php",
       type: "POST",
@@ -56,13 +56,13 @@ osm.markers.saveMap = function() {
           osm.markers._admin.id = json.id;
           osm.markers._admin.hash = json.hash;
         }
-        $_("pm_status").innerHTML = "Сохранено<br>"+
-          "<a href='/?mapid="+osm.markers._admin.id+"'>Ссылка на просмотр</a><br>"+
-          "<a href='/?mapid="+osm.markers._admin.id+"&hash="+osm.markers._admin.hash+"'>Ссылка на редактирование</a><br>"+
-          "<a href='/mymap.php?id="+osm.markers._admin.id+"&format=gpx'>Скачать GPX</a>";
+        $_("pm_status").innerHTML = "РЎРѕС…СЂР°РЅРµРЅРѕ<br>"+
+          "<a href='/?mapid="+osm.markers._admin.id+"'>РЎСЃС‹Р»РєР° РЅР° РїСЂРѕСЃРјРѕС‚СЂ</a><br>"+
+          "<a href='/?mapid="+osm.markers._admin.id+"&hash="+osm.markers._admin.hash+"'>РЎСЃС‹Р»РєР° РЅР° СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ</a><br>"+
+          "<a href='/mymap.php?id="+osm.markers._admin.id+"&format=gpx'>РЎРєР°С‡Р°С‚СЊ GPX</a>";
       }
     }).fail(function (jqXHR,textStatus) {
-      $_("pm_status").innerHTML = "Ошибка при сохранении!";
+      $_("pm_status").innerHTML = "РћС€РёР±РєР° РїСЂРё СЃРѕС…СЂР°РЅРµРЅРёРё!";
     });
   }
 }
@@ -87,7 +87,7 @@ osm.markers.readMap = function() {
     },
     dataType: 'json',
     success: function(json, text, jqXHR){
-      if (!json.service.existing) { alert("Карта не существует"); return; }
+      if (!json.service.existing) { alert("РљР°СЂС‚Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚"); return; }
       osm.markers._admin.editable = json.service.editing;
       osm.markers._admin.hash = adminhash;
       osm.markers._admin.id = mapid;
@@ -165,6 +165,6 @@ osm.markers.readMap = function() {
       }
     }
   }).fail(function (jqXHR, textStatus) {
-    alert("Произошла ошибка при чтении карты");
+    alert("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё РєР°СЂС‚С‹");
   });
 }
