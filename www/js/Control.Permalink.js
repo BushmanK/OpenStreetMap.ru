@@ -1,6 +1,6 @@
-L.Control.Permalink = L.Class.extend({
+L.Control.Permalink = L.Control.extend({
 	options: {
-		position: L.Control.Position.BOTTOM_LEFT,
+		position: "bottomleft",
 		useAnchor: true,
 		useMarker: true,
 		markerOptions: {}
@@ -37,13 +37,7 @@ L.Control.Permalink = L.Class.extend({
 				if (fn) return fn();
 			}
 		}
-	},
 
-	getPosition: function() {
-		return this.options.position;
-	},
-
-	getContainer: function() {
 		return this._container;
 	},
 
@@ -66,7 +60,7 @@ L.Control.Permalink = L.Class.extend({
 
 	_update_layers: function() {
 		if (!this._layers) return;
-		
+
 		var layer = this._layers.currentBaseLayer();
 		if (layer) this._params['layer'] = (this._layers.options.layerHashes == null) ? layer.name : this._layers.options.layerHashes[layer.name];
 		for(x in osm.map.control_layers._layers) {
@@ -81,7 +75,7 @@ L.Control.Permalink = L.Class.extend({
 		}
 		this._update_href();
 	},
-	
+
 	get_params: function () {
 		var center = this._map.getCenter();
 		center = this._round_point(center);
@@ -238,7 +232,7 @@ L.Control.Layers.include({
 				return obj;
 		}
 	},
-	
+
 	listCurrentOverlays: function() {
         var result = [];
         for (var i in this._layers) {

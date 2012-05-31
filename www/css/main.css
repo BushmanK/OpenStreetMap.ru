@@ -718,9 +718,10 @@ div.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
 .leaflet-control-container .leaflet-control-layers.leaflet-control {
   margin-top: 30px;
 }
-.leaflet-control-container .permalink {
+.leaflet-control-container .leaflet-control-permalink {
   top: 1.5em;
   z-index: 8;
+  margin-left: 5px !important;
 }
 
 /*
@@ -803,30 +804,8 @@ div.page-about .center .footnote{
   padding: 0px;
   margin: 3px;
   line-height: 13px;
-  color: white;
   float: left;
   cursor: pointer;
-}
-.colour-picker-button-blue {
-  background: #0033FF;
-}
-.colour-picker-button-green {
-  background: #22dd44;
-  color: #000000;
-}
-.colour-picker-button-red {
-  background: #F21D53;
-}
-.colour-picker-button-yellow {
-  background: #F1E415;
-  color: #000000;
-}
-.colour-picker-button-violet {
-  background: #9B5BA0;
-}
-.colour-picker-button-orange {
-  background: #E48530;
-  color: #000000;
 }
 .default-input, .default-input-focused {
   font-size: 14px;
@@ -928,33 +907,87 @@ ul.pm-options span {
 	box-shadow: 0 0 7px #688014;
 }
 
-/* osmjs-control-distance */
+/* leaflet-plugins-control-distance */
+
 .leaflet-control-distance {
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
-  padding: 5px;
-  background: rgba(0, 0, 0, 0.25);
-}
-.leaflet-control-distance a {
-  background-color: rgba(255, 255, 255, 0.75);
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-image: url('/img/distance-icon.png');
-  display: block;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  width: 19px;
-  height: 19px;
-}
-.leaflet-control-distance a:hover {
-  background-color: #fff;
-}
-.leaflet-control-distance a.active {
-  background-color: rgba(255, 255, 0, 0.75);
+-moz-border-radius: 7px;
+-webkit-border-radius: 7px;
+border-radius: 7px;
+
+padding: 5px;
+background-color: rgba(0, 0, 0, 0.25);
 }
 
+.leaflet-control-distance a, .leaflet-control-distance div {
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+
+padding: 2px;
+background-position: 50% 50%;
+background-repeat: no-repeat;
+background-color: rgba(255, 255, 255, 0.75);
+}
+
+.leaflet-control-distance a {
+width: 16px;
+height: 16px;
+display: block;
+}
+
+.leaflet-control-distance div {
+color: #333;
+height: 16px;
+margin-top: 5px;
+white-space: nowrap;
+}
+
+.leaflet-control-distance-edit {
+background-image: url('/img/distance-icon.png');
+float: left;
+}
+
+a.leaflet-control-distance-delete {
+margin-left: 5px;
+background-image: url('/img/cross.png'); /* http://www.famfamfam.com/ */
+display: inline-block;
+}
+
+a.leaflet-control-distance-active {
+background-color: yellow;
+}
+
+/* left button */
+.leaflet-leftbutton {
+-moz-border-radius: 7px;
+-webkit-border-radius: 7px;
+border-radius: 7px;
+padding: 5px;
+background-color: rgba(0, 0, 0, 0.25);
+}
+
+.leaflet-leftbutton a, .leaflet-leftbutton div {
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+padding: 2px;
+background-position: 50% 50%;
+background-repeat: no-repeat;
+background-color: rgba(255, 255, 255, 0.75);
+}
+
+.leaflet-leftbutton a {
+width: 16px;
+height: 16px;
+display: block;
+margin: 0px;
+}
+
+.leaflet-leftbutton div {
+color: #333;
+height: 16px;
+margin-top: 5px;
+}
 
 /*
 for leaflet

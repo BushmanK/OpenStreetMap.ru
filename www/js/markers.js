@@ -1,3 +1,11 @@
+MarkerIcon = L.Icon.Default.extend({
+  createIcon: function() {
+    var img = this._createIcon(this.options.markerColor);
+    this._setIconStyles(img, 'icon');
+    return img;
+  }
+});
+
 osm.markers = {
   _drawingMode: 0,// 0 - nothing, 1 - marker (single, permalink), 2 - multimarker, 3 - line
   _layerGroup: 0,
@@ -6,22 +14,16 @@ osm.markers = {
     points: [],
     lines: []
   },
-  _icons: [
-    new L.Icon('/img/marker.png'),
-    new L.Icon('/img/marker-red.png'),
-    new L.Icon('/img/marker-green.png'),
-    new L.Icon('/img/marker-yellow.png'),
-    new L.Icon('/img/marker-violet.png'),
-    new L.Icon('/img/marker-orange.png')
+  _color_array: [
+    {image:'icon',   color:'#0033FF', text:'white'},
+    {image:'red',    color:'#F21D53', text:'white'},
+    {image:'green',  color:'#22DD44', text:'black'},
+    {image:'yellow', color:'#F1E415', text:'black'},
+    {image:'violet', color:'#9B5BA0', text:'white'},
+    {image:'orange', color:'#E48530', text:'black'}
   ],
-  _line_color: [
-    '#0033FF',
-    '#F21D53',
-    '#22dd44',
-    '#F1E415',
-    '#9B5BA0',
-    '#E48530'
-  ],
+  _icons: [],
+  _line_color: [],
   _admin: {
     hash: '',
     id: -1,
@@ -31,6 +33,22 @@ osm.markers = {
 osm.markers.initialize = function() {
   osm.markers._layerGroup = new L.LayerGroup();
   osm.map.addLayer(osm.markers._layerGroup);
+  // color generation enhanced
+  var icons = [];
+  var lines = [];
+  var buttons="";
+  var replacable = "<div class='colour-picker-button' style='background:{{bg}};color:{{text}}' onClick='$$$.toggleCheck({{i}});'>&#x2713;</div>";
+  for (var i=0;i<osm.markers._color_array.length;i++) {
+    var c = osm.markers._color_array[i];
+    icons.push(new MarkerIcon({markerColor:c.image}));
+    lines.push(c.color);
+    var str = replacable.replace(/{{bg}}/, c.color).replace(/{{text}}/,c.text).replace(/{{i}}/,i);
+    if (i!=0) str = str.replace("&#x2713;","");
+    buttons+=str;
+  }
+  osm.markers._icons = icons;
+  osm.markers._line_color = lines;
+  $(".colour-picker").each(function(){$(this).html(buttons)});
 }
 osm.markers.decodehtml = function(s) {
   if(s) return $("<div/>").html(s).text(); else return s;
@@ -138,7 +156,6 @@ osm.markers.createPath = function(e) { // todo: move it to PersonalLine?
     osm.markers._newPath.addLatLng(e.latlng);
 //    osm.map.doubleClickZoom.disable();
     $('#map').mousemove(osm.markers.mouseMovePath);
-    // TODO: add enable editing after moving to Leaflet 0.4
   }
   if (osm.markers._newPath.getLatLngs().length > 2) {
     var points = osm.markers._newPath.getLatLngs();
@@ -149,12 +166,13 @@ osm.markers.createPath = function(e) { // todo: move it to PersonalLine?
       osm.markers._removeHandlers();
     }
   }
+  osm.markers._newPath.refreshPath();
 }
 osm.markers.mouseMovePath = function(event){
   var points = osm.markers._newPath.getLatLngs();
   var coord = osm.map.mouseEventToLatLng(event);
   points[points.length-1] = coord;
-  osm.markers._newPath._redraw(); //TODO: change _redraw to redraw after moving to Leaflet 0.4
+  osm.markers._newPath.redraw();
 }
 
 // TODO: when IE whould support placeholder attribute for input elements - remove that
@@ -432,7 +450,8 @@ PersonalMarkerEditable = PersonalMarker.extend({
 
 PersonalLine = L.Polyline.extend({
   initialize: function(points, details) {
-    this.setLatLngs(points);
+    L.Polyline.prototype.initialize.call(this, points, details);
+    //this.setLatLngs(points);
     this.addToLayerGroup();
     this.fillDetails(details);
     if (this._pl_name || this._pl_description) {
@@ -469,11 +488,16 @@ PersonalLine = L.Polyline.extend({
 });
 PersonalLineEditable = PersonalLine.extend({
   initialize: function(points, details) {
-    this.setLatLngs(points);
-    this.fillDetails(details);
-    this.addToLayerGroup();
+    PersonalLine.prototype.initialize.call(this, points, details);
+    
+    this.editing.enable();
+
     this._pl_name = osm.markers.decodehtml(this._pl_name);
     this._pl_description = osm.markers.decodehtml(this._pl_description);
+  },
+  refreshPath: function() {
+    osm.markers._layerGroup.removeLayer(this);
+    osm.markers._layerGroup.addLayer(this);
   },
   remove: function() {
     if (this._popup) this._popup._close();
@@ -485,7 +509,7 @@ PersonalLineEditable = PersonalLine.extend({
     var points = this.getLatLngs();
     if (truncate) {
       points.pop();
-      this._redraw();//->redraw in Leaflet 0.4
+      this.redraw();
     }
     if (points.length < 2) {
       this.remove();
