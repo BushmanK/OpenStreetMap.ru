@@ -18,7 +18,11 @@ $page_head = <<<PHP_HEAD
   <script type="text/javascript" src="js/osmjs-validators-errors.js"></script>
   <script type="text/javascript" src="js/osmjs-weather-layer.js"></script>
   <script type="text/javascript" src="js/OpenStreetBugs.js"></script>
-  <script type="text/javascript" src="js/markers.js"></script>
+  <script type="text/javascript" src="js/markers/osm.markers.net.js"></script>
+  <script type="text/javascript" src="js/markers/osm.markers.personalline.js"></script>
+  <script type="text/javascript" src="js/markers/osm.markers.personalmarker.js"></script>
+  <script type="text/javascript" src="js/markers/osm.markers.ui.js"></script>
+  <script type="text/javascript" src="js/markers/osm.markers.util.js"></script>
   <script type="text/javascript" src="js/validators.js"></script>
   <script type="text/javascript" src="js/wpc.js"></script>
   <link rel="stylesheet" href="css/osb.css" />
